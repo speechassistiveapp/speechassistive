@@ -102,7 +102,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
 
     print("The Gend Value is: $gendValue");
     
-    String transformedText = text.split(" ").join("   ,-");
+    String transformedText = text.split(" ").join("   -");
     print("Male Voice will say Transformed: $transformedText");
 
     if (gendValue.compareTo('MALE') == 0)
@@ -172,19 +172,6 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     
   } //getResponse from Eleven Labs
 
-  Future speakFemaleVoice(String text) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(1);
-    await flutterTts.speak(text);
-    //print(flutterTts.getVoices);
-  }
-
-  // ignore: non_constant_identifier_names
-  Future speak_stud_female(String text_answer) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(2);
-    await flutterTts.speak(text_answer);
-  }
 
   Future speak_stud_male(String text_answer) async { 
       
@@ -199,7 +186,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
 
     //print("The Gend Value is: $gendValue");
     
-    String transformedText = text_answer.split(" ").join("   ,-");
+    String transformedText = text_answer.split(" ").join("   -");
     //print("Male Voice will say Transformed: $transformedText");
 
     if (gendValue.compareTo('MALE') == 0)
@@ -433,9 +420,9 @@ class _TexttoSpeech extends State<TexttoSpeech> {
                             speakMaleVoice(textEditingController.text);
                             
                             if (gend == "MALE") {
-                              speakMaleVoice(textEditingController.text);
+                              //speakMaleVoice(textEditingController.text);
                             } else if (gend == "FEMALE") {
-                              speakFemaleVoice(textEditingController.text);
+                              //speakFemaleVoice(textEditingController.text);
                             }
                             //print("gend value: $gend");
                             String tell = textEditingController.text;
@@ -506,10 +493,9 @@ class _TexttoSpeech extends State<TexttoSpeech> {
                           onTap: () async {
                               speak_stud_male(textEditingController_stud.text);
                             if (child_gender == "MALE") {
-                              speak_stud_male(textEditingController_stud.text);
+                              //speak_stud_male(textEditingController_stud.text);
                             } else if (child_gender == "FEMALE") {
-                              speak_stud_female(
-                                  textEditingController_stud.text);
+                              //speak_stud_female(textEditingController_stud.text);
                             }
                             //print("gender value: $child_gender");
                             //print("Response tapped!");
