@@ -102,10 +102,10 @@ class _TexttoSpeech extends State<TexttoSpeech> {
 
     print("The Gend Value is: $gendValue");
     
-    String transformedText = text.split(" ").join("   --");
+    String transformedText = text.split(" ").join("   ,-");
     print("Male Voice will say Transformed: $transformedText");
 
-    if (gendValue.compareTo('"MALE"') == 0)
+    if (gendValue.compareTo('MALE') == 0)
     {
       String url = 'https://api.elevenlabs.io/v1/text-to-speech/ErXwobaYiN019PkySvjV';
     //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
@@ -120,8 +120,8 @@ class _TexttoSpeech extends State<TexttoSpeech> {
         "text": transformedText,
         "model_id": "eleven_monolingual_v1",
         "voice_settings": {
-          "stability": .8, 
-          "similarity_boost": .7
+          "stability": 0.75, 
+          "similarity_boost": 0.75
           }
       }),
     );
@@ -134,7 +134,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
       // throw Exception('Failed to load audio');
       return;
     }
-    }else if (gendValue.compareTo('"FEMALE"') == 0)
+    }else if (gendValue.compareTo('FEMALE') == 0)
     {
       String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
     //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
@@ -149,8 +149,8 @@ class _TexttoSpeech extends State<TexttoSpeech> {
         "text": transformedText,
         "model_id": "eleven_monolingual_v1",
         "voice_settings": {
-          "stability": .8, 
-          "similarity_boost": .7
+          "stability": 0.75, 
+          "similarity_boost": 0.75
           }
       }),
     );
@@ -176,7 +176,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setPitch(1);
     await flutterTts.speak(text);
-    print(flutterTts.getVoices);
+    //print(flutterTts.getVoices);
   }
 
   // ignore: non_constant_identifier_names
@@ -188,7 +188,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
 
   Future speak_stud_male(String text_answer) async { 
       
-    print("Male Voice will say: $text_answer");
+    //print("Male Voice will say: $text_answer");
     String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
     
     print('EL_API_KEY Retrieved');
@@ -197,12 +197,12 @@ class _TexttoSpeech extends State<TexttoSpeech> {
       throw Exception('Failed to retrieve the API key from environment variables.');
     }
 
-    print("The Gend Value is: $gendValue");
+    //print("The Gend Value is: $gendValue");
     
     String transformedText = text_answer.split(" ").join("   ,-");
-    print("Male Voice will say Transformed: $transformedText");
+    //print("Male Voice will say Transformed: $transformedText");
 
-    if (gendValue.compareTo('"MALE"') == 0)
+    if (gendValue.compareTo('MALE') == 0)
     {
       String url = 'https://api.elevenlabs.io/v1/text-to-speech/SP0cpO1imnBqbiBkJdTZ';
     //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
@@ -217,8 +217,8 @@ class _TexttoSpeech extends State<TexttoSpeech> {
         "text": transformedText,
         "model_id": "eleven_monolingual_v1",
         "voice_settings": {
-          "stability": .8, 
-          "similarity_boost": .7
+          "stability": 0.75, 
+          "similarity_boost": 0.75
           }
       }),
     );
@@ -231,7 +231,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
       // throw Exception('Failed to load audio');
       return;
     }
-    }else if (gendValue.compareTo('"FEMALE"') == 0)
+    }else if (gendValue.compareTo('FEMALE') == 0)
     {
       String url = 'https://api.elevenlabs.io/v1/text-to-speech/EkZU0N80jsVFKZZtmBNQ';
     //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
@@ -437,10 +437,10 @@ class _TexttoSpeech extends State<TexttoSpeech> {
                             } else if (gend == "FEMALE") {
                               speakFemaleVoice(textEditingController.text);
                             }
-                            print("gend value: $gend");
+                            //print("gend value: $gend");
                             String tell = textEditingController.text;
-                            print("value: $tell");
-                            print("Response tapped!");
+                            //print("value: $tell");
+                            //print("Response tapped!");
                           },
                         ),
 
@@ -511,8 +511,8 @@ class _TexttoSpeech extends State<TexttoSpeech> {
                               speak_stud_female(
                                   textEditingController_stud.text);
                             }
-                            print("gender value: $child_gender");
-                            print("Response tapped!");
+                            //print("gender value: $child_gender");
+                            //print("Response tapped!");
                           },
                         ),
                         Text('$child_Nname',
@@ -592,7 +592,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     gend = pref.getString('_guardgend');
     gendValue = pref.getString('_guardgend')?? "UNKNOWN";
-    print("Gender: $gend");
+    //print("Gender: $gend");
 
     //comments ko to: the key will be passed here (guardian_Email)
     setState(() {});
@@ -604,13 +604,13 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     g_avatar = pref.getString('_avatar') ?? "UNKNOWN";
     g_avatar = g_avatar.replaceAll('"', '');
     guard_avatar = guard_avatar?.replaceAll('"', '')?? '';
-    print('Guard Avatar: $guard_avatar');
-    print('Guard Avatar: $g_avatar');
+    //print('Guard Avatar: $guard_avatar');
+    //print('Guard Avatar: $g_avatar');
     guard_avatar!;
     if (guard_avatar?.isEmpty ?? true) {
         guard_avatar = "Daddy1.png";
       
-      print('No choice: $guard_avatar');
+      //print('No choice: $guard_avatar');
     }else {
     guard_avatar = guard_avatar?.replaceAll('"', '')?? '';
    }
@@ -621,7 +621,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
   void getGuardianNname() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     guard_Nname = pref.getString('_guardNname');
-    print("GuardName: $guard_Nname");
+    //print("GuardName: $guard_Nname");
 
     //comments ko to: the key will be passed here (guardian_Email)
     setState(() {});
@@ -630,7 +630,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
   void getGuardianEmail() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     guardianEmail = pref.getString('guardian_Email');
-    print("GuardEmail: $guardianEmail");
+    //print("GuardEmail: $guardianEmail");
 
     setState(() {});
   }
@@ -654,8 +654,8 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     child_avatar = pref.getString('_childavatar');
     ch_avatar = pref.getString('_childavatar') ?? "UNKNOWN";
     ch_avatar = ch_avatar.replaceAll('"', '');
-    print('Child Avatar: $child_avatar');
-    print('Child Avatar: $ch_avatar');
+    //print('Child Avatar: $child_avatar');
+    //print('Child Avatar: $ch_avatar');
 
     setState(() {});
   }
