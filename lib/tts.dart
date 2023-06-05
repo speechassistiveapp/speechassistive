@@ -364,7 +364,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     //print(img_asset);
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(title: const Text("Play Drill"), centerTitle: true),
+      appBar: AppBar(title: const Text("Speech Practice Drill"), centerTitle: true),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(24),
@@ -447,6 +447,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
                 children: [
                   SizedBox(
                     width: 300,
+                    height: 80,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisSize: MainAxisSize.max,
@@ -650,7 +651,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     return Column(
       children: const [
         Text(
-          "Tap the conversation to hear the sound.",
+          "Tap the avatars one at a time to hear the conversation.",
           style: TextStyle(
               fontSize: 17, fontWeight: FontWeight.bold, color: Colors.black),
         )

@@ -74,30 +74,26 @@ class _Colors1 extends State<Colors1> {
               child: Column(
                 children: <Widget>[
                   GestureDetector(
-                    child: Image.asset(
-                      'assets/images/black.png',
-                      width: 150,
-                      height: 120,
-                    ),
-                    onTap: () async {
-                      var map = Map<String, dynamic>();
-                      map['Email'] = guardianEmail;
-                      var uri =
-                          "https://www.speech-assistive-app.com/getdata.php";
-                      var res = await http.post(Uri.parse(uri), body: map);
-                      //print(res.body);
-                      final String data = jsonEncode(res
-                          .body); //content response of res.body must be converted from object to json string by using jsonEncode
-                      // ignore: avoid_print
-                      data_ = (data[15] + data[16] + data[17] + data[18]);
-                      setState(() {});
-                      if (data_ == "MALE") {
-                        speakMaleVoice('BLACK');
-                      } else if (data_ == "FEMA") {
-                        speakFemaleVoice('WHITE');
-                      }
-                    },
-                  ),
+  child: Image.asset(
+    'assets/images/black.png',
+    width: 150,
+    height: 120,
+  ),
+  onTap: () async {
+    var map = Map<String, dynamic>();
+    map['Email'] = guardianEmail;
+    var uri = "https://www.speech-assistive-app.com/getdata.php";
+    var res = await http.post(Uri.parse(uri), body: map);
+    final Map<String, dynamic> data = jsonDecode(res.body);
+    data_ = data['gender'];
+    setState(() {});
+    if (data_ == "MALE") {
+      speakMaleVoice('BLACK');
+    } else if (data_ == "FEMA") {
+      speakFemaleVoice('WHITE');
+    }
+  },
+),
                   //const Text('BLACK',
                   //style: TextStyle(
                   // fontSize: 15,

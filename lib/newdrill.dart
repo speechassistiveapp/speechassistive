@@ -335,7 +335,7 @@ _header(context) {
   return Column(
     children: const [
       Text(
-        "Please enter your question and expected answer  \n in the textboxes below.",
+        "Please enter the phrase/question of the guardian on the first text box. While the expected answer of the student on the second text box.",
         style: TextStyle(
             fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
       )
