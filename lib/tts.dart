@@ -102,7 +102,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
 
     print("The Gend Value is: $gendValue");
     
-    String transformedText = text.split(" ").join("   -");
+    String transformedText = text.split(" ").join("   ,");
     print("Male Voice will say Transformed: $transformedText");
 
     if (gendValue.compareTo('MALE') == 0)
@@ -186,7 +186,7 @@ class _TexttoSpeech extends State<TexttoSpeech> {
 
     //print("The Gend Value is: $gendValue");
     
-    String transformedText = text_answer.split(" ").join("   -");
+    String transformedText = text_answer.split(" ").join("   ,");
     //print("Male Voice will say Transformed: $transformedText");
 
     if (gendValue.compareTo('MALE') == 0)
