@@ -58,6 +58,9 @@ dependencies:
   flutter_dotenv: ^5.1.0
   just_audio: ^0.9.34
   flutter_ffmpeg: ^0.4.2
+  random_string: ^2.3.1
+  intl: ^0.18.1
+  flutter_staggered_grid_view: ^0.6.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

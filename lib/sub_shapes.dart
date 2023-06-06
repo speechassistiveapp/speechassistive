@@ -15,6 +15,11 @@ import 'package:http/http.dart' as http;
 import 'package:speechassistive/vocabulary.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+
 List<String> imageList = [
   'assets/images/1.png',
   'assets/images/2.png',
@@ -52,61 +57,130 @@ class _ShapeState extends State<sub_Shapes> {
   //late AnimationController _animationController;
   String? Gender;
   String? guardianEmail;
+  
+  final player = AudioPlayer(); //audio player obj that will play audio
 
   @override
   void initState() {
     super.initState();
     getGuardianEmail();
+    
     //displaygender();
   }
 
   Future getGender() async {
-// ignore: prefer_collection_literals
+  //getGender();
+                    var map = Map<String, dynamic>();
+                    map['Email'] = guardianEmail;
+                    var uri =
+                        "https://www.speech-assistive-app.com/getdata.php";
+                    var res = await http.post(Uri.parse(uri), body: map);
+                    //print(res.body);
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
+                    // ignore: avoid_print
+                    data_ = data;
+                    setState(() {});
+                    if (data_ == "MALE") {
+                      speakMaleVoice('Cross');
+                    } else if (data_ == "FEMA") {
+                      speakFemaleVoice('Cross');
+                    }
+}
 
-    var map = Map<String, dynamic>();
-    map['Email'] = guardianEmail;
-    var uri = "https://www.speech-assistive-app.com/getdata.php";
-    var res = await http.post(Uri.parse(uri), body: map);
-
-    //print(res.body);
-    final String data = jsonEncode(res
-        .body); //content response of res.body must be converted from object to json string by using jsonEncode
-    // ignore: avoid_print
-
-    //print(data[15]);
-    //print(data[16]);
-    //print(data[17]);
-    //print(data[18]);
-    data_ = (data[15] + data[16] + data[17] + data[18]);
-
-    setState(() {});
-    //displaygender(); //function with setState function
-
-    //print(data_);
-  }
 
   Future speakMaleVoice(String text) async {
-    await flutterTts.setLanguage("en-GB");
-    await flutterTts.setPitch(0.6);
-    await flutterTts.speak(text);
-    await flutterTts.setVoice({"name": "en-US-Neural2-D", "locale": "en-US"});
-    print(await flutterTts.getVoices);
+    print("Male Voice will say: $text");
+    String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
+    
+    print('EL_API_KEY Retrieved');
+    print(EL_API_KEY);
+    if (EL_API_KEY == null) {
+      throw Exception('Failed to retrieve the API key from environment variables.');
+    }
+    String transformedText = text.split(" ").join("   , ");
+    print("Male Voice will say Transformed: $transformedText");
+
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/ErXwobaYiN019PkySvjV';
+    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'accept': 'audio/mpeg',
+        'xi-api-key': EL_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        "text": transformedText,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+          "stability": 0.75, 
+          "similarity_boost": 0.75
+          }
+      }),
+    );
+    if (response.statusCode == 200) {
+      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
+      await player.setAudioSource(MyCustomSource(
+          bytes)); //send the bytes to be read from the JustAudio library
+      player.play(); //play the audio
+    } else {
+      // throw Exception('Failed to load audio');
+      return;
+    }
+    
   }
 
   Future speakFemaleVoice(String text) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(1);
-    await flutterTts.speak(text);
-    //await flutterTts.setVoice({"name": "IVY", "locale": "en-US"});
-    print(await flutterTts.getVoices);
+    print("Female Voice will say: $text");
+    String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
+    
+    print('EL_API_KEY Retrieved');
+    print(EL_API_KEY);
+    if (EL_API_KEY == null) {
+      throw Exception('Failed to retrieve the API key from environment variables.');
+    }
+    String transformedText = text.split(" ").join("   , ");
+    print("Female Voice will say Transformed: $transformedText");
+
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'accept': 'audio/mpeg',
+        'xi-api-key': EL_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        "text": transformedText,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+          "stability": 0.75, 
+          "similarity_boost": 0.75
+          }
+      }),
+    );
+    if (response.statusCode == 200) {
+      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
+      await player.setAudioSource(MyCustomSource(
+          bytes)); //send the bytes to be read from the JustAudio library
+      player.play(); //play the audio
+    } else {
+      // throw Exception('Failed to load audio');
+      return;
+    }
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    
     TextEditingController email = TextEditingController();
     //email.text = guardianEmail.toString();
     return Scaffold(
       appBar: AppBar(title: const Text("Tap the SHAPES"), centerTitle: true),
+      
       body: Column(children: [
         //TextField(
         //controller: email,
@@ -130,8 +204,16 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/9.png'),
+                child: Hero(
+                  tag: 'crossImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/9.png'),),
                   onTap: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ZoomedInScreen(imagePath: 'assets/images/9.png', tag: 'crossImageTag'),
+                      ),
+                    );
                     //getGender();
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
@@ -139,15 +221,15 @@ class _ShapeState extends State<sub_Shapes> {
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Cross');
+                      speakMaleVoice('-----CROSS!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Cross');
+                      speakFemaleVoice('-----CROSS!');
                     }
                   },
                 )),
@@ -155,23 +237,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/2.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '2ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/2.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/2.png', tag: '2ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Quadralateral');
+                      speakMaleVoice('-----Quadralateral!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Quadralateral');
+                      speakFemaleVoice('-----Quadralateral!');
                     }
                   },
                 )),
@@ -179,25 +268,32 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
+        child: Hero(
+          tag: '3ImageTag', // Unique tag for the blue image
                   child: Image.asset(
                     'assets/images/3.png',
-                  ),
-                  onTap: () async {
+                  ),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/3.png', tag: '3ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Pyramid');
+                      speakMaleVoice('-----Pyramid!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Pyramid');
+                      speakFemaleVoice('-----Pyramid!');
                     }
                   },
                 ))
@@ -213,23 +309,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/4.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '4ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/4.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/4.png', tag: '4ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Sphere');
+                      speakMaleVoice('-----Sphere!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Sphere');
+                      speakFemaleVoice('-----Sphere!');
                     }
                   },
                 )),
@@ -237,23 +340,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/5.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '5ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/5.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/5.png', tag: '5ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Star');
+                      speakMaleVoice('-----Star!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Star');
+                      speakFemaleVoice('-----Star!');
                     }
                   },
                 )),
@@ -261,23 +371,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/6.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '6ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/6.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/6.png', tag: '6ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Rhombus');
+                      speakMaleVoice('-----Rhombus!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Rhombus');
+                      speakFemaleVoice('-----Rhombus!');
                     }
                   },
                 )),
@@ -293,23 +410,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/7.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '7ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/7.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/7.png', tag: '7ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Dodecagon');
+                      speakMaleVoice('-----Do-decagon!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Dodecagon');
+                      speakFemaleVoice('-----Do-decagon!');
                     }
                   },
                 )),
@@ -317,23 +441,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/8.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '8ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/8.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/8.png', tag: '8ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Circle');
+                      speakMaleVoice('-----Circle!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Circle');
+                      speakFemaleVoice('-----Circle!');
                     }
                   },
                 )),
@@ -341,23 +472,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/1.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '1ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/1.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/1.png', tag: '1ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Cube');
+                      speakMaleVoice('-----Cube!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Cube');
+                      speakFemaleVoice('-----Cube!');
                     }
                   },
                 ))
@@ -373,23 +511,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/10.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '10ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/10.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/10.png', tag: '10ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Club');
+                      speakMaleVoice('-----Club!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Club');
+                      speakFemaleVoice('-----Club!');
                     }
                   },
                 )),
@@ -397,23 +542,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/11.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '11ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/11.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/11.png', tag: '11ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Crescent');
+                      speakMaleVoice('-----Crescent!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Crescent');
+                      speakFemaleVoice('-----Crescent!');
                     }
                   },
                 )),
@@ -421,23 +573,30 @@ class _ShapeState extends State<sub_Shapes> {
                 width: 100,
                 height: 120,
                 child: GestureDetector(
-                  child: Image.asset('assets/images/12.png'),
-                  onTap: () async {
+        child: Hero(
+          tag: '12ImageTag', // Unique tag for the blue image
+                  child: Image.asset('assets/images/12.png'),),
+                  onTap: () async {Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ZoomedInScreen(imagePath: 'assets/images/12.png', tag: '12ImageTag'),
+            ),
+          );
                     var map = Map<String, dynamic>();
                     map['Email'] = guardianEmail;
                     var uri =
                         "https://www.speech-assistive-app.com/getdata.php";
                     var res = await http.post(Uri.parse(uri), body: map);
                     //print(res.body);
-                    final String data = jsonEncode(res
-                        .body); //content response of res.body must be converted from object to json string by using jsonEncode
+                    final String data = res
+                        .body; //content response of res.body must be converted from object to json string by using jsonEncode
                     // ignore: avoid_print
-                    data_ = (data[15] + data[16] + data[17] + data[18]);
+                    data_ = data;
                     setState(() {});
                     if (data_ == "MALE") {
-                      speakMaleVoice('Triangle');
+                      speakMaleVoice('-----Triangle!');
                     } else if (data_ == "FEMA") {
-                      speakFemaleVoice('Triangle');
+                      speakFemaleVoice('-----Triangle!');
                     }
                   },
                 )),
@@ -503,6 +662,8 @@ class _ShapeState extends State<sub_Shapes> {
     guardianEmail = pref.getString('guardian_Email');
     //comments ko to: the key will be passed here (guardian_Email)
     setState(() {});
+    //speakFemaleVoice('----- Hi, There! Let us learn! the different shapes. Tap each shape below!');
+    speakFemaleVoice('------');
   }
 
   void getGuardianGender() async {
@@ -520,6 +681,7 @@ class _ShapeState extends State<sub_Shapes> {
           textAlign: TextAlign.justify,
           style: TextStyle(fontSize: 17, color: Colors.black),
         )
+        
       ],
     );
   }
@@ -531,3 +693,73 @@ class _ShapeState extends State<sub_Shapes> {
    // setState(() {});
 //  }
 
+
+
+// Feed your own stream of bytes into the player
+class MyCustomSource extends StreamAudioSource {
+  final List<int> bytes;
+  MyCustomSource(this.bytes);
+
+  @override
+  Future<StreamAudioResponse> request([int? start, int? end]) async {
+    start ??= 0;
+    end ??= bytes.length;
+    return StreamAudioResponse(
+      sourceLength: bytes.length,
+      contentLength: end - start,
+      offset: start,
+      stream: Stream.value(bytes.sublist(start, end)),
+      contentType: 'audio/mpeg',
+    );
+  }
+}
+
+class ZoomedInScreen extends StatelessWidget {
+  final String imagePath;
+  final String tag;
+
+  const ZoomedInScreen({required this.imagePath, required this.tag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Semi-transparent black background
+          Container(
+            //color: Colors.black.withOpacity(0.5),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context); // Pop the zoomed-in screen when tapped
+            },
+            child: Center(
+              child: Hero(
+                tag: tag, // Use the tag passed from the previous screen
+                child: Image.asset(
+                  imagePath, // Use the image path passed from the previous screen
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 120,
+            right: 20,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // Pop the zoomed-in screen when the close button is pressed
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.cyan,
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(16),
+              ),
+              child: Icon(Icons.close),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

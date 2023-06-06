@@ -277,9 +277,9 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     // ignore: avoid_print
     print(data);
 
-    if (data == '"Drill Title already exist!"') {
+    if (data == '"Drill Title already exist Here!"') {
       Fluttertoast.showToast(
-        msg: "Drill Title already exist!",
+        msg: "Drill Title already exist Here!",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.CENTER,
         fontSize: 16.0,
@@ -447,33 +447,41 @@ class _TexttoSpeech extends State<TexttoSpeech> {
                 children: [
                   SizedBox(
                     width: 300,
-                    height: 80,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisSize: MainAxisSize.min, // Set MainAxisSize to min
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextField(
+                        IntrinsicHeight( // Wrap the TextField with IntrinsicHeight
+                          child: TextField(
                             readOnly: true,
                             controller: textEditingController,
                             decoration: InputDecoration(
                               hintText: "Type Phrase/Question",
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 10),
+                                vertical: 10.0,
+                                horizontal: 10,
+                              ),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: BorderSide.none),
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
                               fillColor: Colors.grey.withOpacity(0.3),
                               filled: true,
                             ),
-                            obscureText: false),
+                            obscureText: false,
+                            minLines: 1, // Set minLines to limit the initial height
+                            maxLines: null, // Set maxLines to allow dynamic height
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
-              ), /////
+              ),
+              /////
 
-              const SizedBox(height: 110),
+              const SizedBox(height: 30),
               
               ///child part
               Row(
@@ -512,37 +520,44 @@ class _TexttoSpeech extends State<TexttoSpeech> {
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    width: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        TextField(
-                            readOnly: true,
-                            controller: textEditingController_stud,
-                            decoration: InputDecoration(
-                              hintText: "Type Answer",
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 10),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: BorderSide.none),
-                              fillColor: Colors.grey.withOpacity(0.3),
-                              filled: true,
-                            ),
-                            obscureText: false),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+  mainAxisAlignment: MainAxisAlignment.end,
+  children: [
+    SizedBox(
+      width: 300,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min, // Set MainAxisSize to min
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          IntrinsicHeight( // Wrap the TextField with IntrinsicHeight
+            child: TextField(
+              readOnly: true,
+              controller: textEditingController_stud,
+              decoration: InputDecoration(
+                hintText: "Type Answer",
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 10,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                fillColor: Colors.grey.withOpacity(0.3),
+                filled: true,
               ),
+              obscureText: false,
+              minLines: 1, // Set minLines to limit the initial height
+              maxLines: null, // Set maxLines to allow dynamic height
+            ),
+          ),
+          
+        ],
+      ),
+    ),
+  ],
+),
+
               const SizedBox(
                 height: 30,
               ),

@@ -12,6 +12,11 @@ import 'package:http/http.dart' as http;
 import 'package:speechassistive/vocabulary.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+
 final TextEditingController textEditingController = TextEditingController();
 final FlutterTts flutterTts = FlutterTts();
 
@@ -35,26 +40,96 @@ class _FuncwrdCook extends State<Funcwrd_Cook> {
 
   String? Gender;
   String? guardianEmail;
+  
+  final player = AudioPlayer(); //audio player obj that will play audio
   @override
   void initState() {
     super.initState();
     getGuardianEmail();
 
     Future speakMaleVoice(String text) async {
-      await flutterTts.setLanguage("en-GB");
-      await flutterTts.setPitch(0.6);
-      await flutterTts.speak(text);
-      //await flutterTts.setVoice({"name": "JOEY", "locale": "en-US"});
-      print(await flutterTts.getVoices);
+    print("Male Voice will say: $text");
+    String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
+    
+    print('EL_API_KEY Retrieved');
+    print(EL_API_KEY);
+    if (EL_API_KEY == null) {
+      throw Exception('Failed to retrieve the API key from environment variables.');
     }
+    String transformedText = text.split(" ").join("   , ");
+    print("Male Voice will say Transformed: $transformedText");
 
-    Future speakFemaleVoice(String text) async {
-      await flutterTts.setLanguage("en-US");
-      await flutterTts.setPitch(1);
-      await flutterTts.speak(text);
-      //await flutterTts.setVoice({"name": "IVY", "locale": "en-US"});
-      print(await flutterTts.getVoices);
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/ErXwobaYiN019PkySvjV';
+    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'accept': 'audio/mpeg',
+        'xi-api-key': EL_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        "text": transformedText,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+          "stability": 0.75, 
+          "similarity_boost": 0.75
+          }
+      }),
+    );
+    if (response.statusCode == 200) {
+      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
+      await player.setAudioSource(MyCustomSource(
+          bytes)); //send the bytes to be read from the JustAudio library
+      player.play(); //play the audio
+    } else {
+      // throw Exception('Failed to load audio');
+      return;
     }
+    
+  }
+
+  Future speakFemaleVoice(String text) async {
+    print("Female Voice will say: $text");
+    String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
+    
+    print('EL_API_KEY Retrieved');
+    print(EL_API_KEY);
+    if (EL_API_KEY == null) {
+      throw Exception('Failed to retrieve the API key from environment variables.');
+    }
+    String transformedText = text.split(" ").join("   , ");
+    print("Female Voice will say Transformed: $transformedText");
+
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'accept': 'audio/mpeg',
+        'xi-api-key': EL_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        "text": transformedText,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+          "stability": 0.75, 
+          "similarity_boost": 0.75
+          }
+      }),
+    );
+    if (response.statusCode == 200) {
+      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
+      await player.setAudioSource(MyCustomSource(
+          bytes)); //send the bytes to be read from the JustAudio library
+      player.play(); //play the audio
+    } else {
+      // throw Exception('Failed to load audio');
+      return;
+    }
+    
+  }
 
     _controller = VideoPlayerController.asset('assets/videos/Cook.mp4');
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -68,24 +143,92 @@ class _FuncwrdCook extends State<Funcwrd_Cook> {
   }
 
   Future speakMaleVoice(String text) async {
-    await flutterTts.setLanguage("en-AU");
-    await flutterTts.setPitch(0.5);
-    await flutterTts.speak(text);
-    //await flutterTts.setVoice({"name": "JOEY", "locale": "en-US"});
-    print(await flutterTts.getVoices);
+    print("Male Voice will say: $text");
+    String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
+    
+    print('EL_API_KEY Retrieved');
+    print(EL_API_KEY);
+    if (EL_API_KEY == null) {
+      throw Exception('Failed to retrieve the API key from environment variables.');
+    }
+    String transformedText = text.split(" ").join("   , ");
+    print("Male Voice will say Transformed: $transformedText");
+
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/ErXwobaYiN019PkySvjV';
+    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'accept': 'audio/mpeg',
+        'xi-api-key': EL_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        "text": transformedText,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+          "stability": 0.75, 
+          "similarity_boost": 0.75
+          }
+      }),
+    );
+    if (response.statusCode == 200) {
+      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
+      await player.setAudioSource(MyCustomSource(
+          bytes)); //send the bytes to be read from the JustAudio library
+      player.play(); //play the audio
+    } else {
+      // throw Exception('Failed to load audio');
+      return;
+    }
+    
   }
 
   Future speakFemaleVoice(String text) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(1);
-    await flutterTts.speak(text);
-    //await flutterTts.setVoice({"name": "IVY", "locale": "en-US"});
-    print(await flutterTts.getVoices);
+    print("Female Voice will say: $text");
+    String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
+    
+    print('EL_API_KEY Retrieved');
+    print(EL_API_KEY);
+    if (EL_API_KEY == null) {
+      throw Exception('Failed to retrieve the API key from environment variables.');
+    }
+    String transformedText = text.split(" ").join("   , ");
+    print("Female Voice will say Transformed: $transformedText");
+
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'accept': 'audio/mpeg',
+        'xi-api-key': EL_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        "text": transformedText,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+          "stability": 0.75, 
+          "similarity_boost": 0.75
+          }
+      }),
+    );
+    if (response.statusCode == 200) {
+      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
+      await player.setAudioSource(MyCustomSource(
+          bytes)); //send the bytes to be read from the JustAudio library
+      player.play(); //play the audio
+    } else {
+      // throw Exception('Failed to load audio');
+      return;
+    }
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    textEditingController.text = "Cooking";
+    textEditingController.text = "-----Cooking";
     return Scaffold(
       appBar: AppBar(
           title: const Text("Tap the FUNCTIONAL WORDS"), centerTitle: true),
@@ -143,10 +286,9 @@ class _FuncwrdCook extends State<Funcwrd_Cook> {
             var uri = "https://www.speech-assistive-app.com/getdata.php";
             var res = await http.post(Uri.parse(uri), body: map);
             //print(res.body);
-            final String data = jsonEncode(res
-                .body); //content response of res.body must be converted from object to json string by using jsonEncode
+            final String data = res.body; //content response of res.body must be converted from object to json string by using jsonEncode
             // ignore: avoid_print
-            data_ = (data[15] + data[16] + data[17] + data[18]);
+            data_ = data;
             setState(() {});
             if (data_ == "MALE") {
               speakMaleVoice(textEditingController.text);
@@ -216,5 +358,79 @@ class _FuncwrdCook extends State<Funcwrd_Cook> {
     Gender = pref.getString('guardian_Gender');
     //comments ko to: the key will be passed here (guardian_Email)
     setState(() {});
+  }
+}
+
+
+
+
+
+
+// Feed your own stream of bytes into the player
+class MyCustomSource extends StreamAudioSource {
+  final List<int> bytes;
+  MyCustomSource(this.bytes);
+
+  @override
+  Future<StreamAudioResponse> request([int? start, int? end]) async {
+    start ??= 0;
+    end ??= bytes.length;
+    return StreamAudioResponse(
+      sourceLength: bytes.length,
+      contentLength: end - start,
+      offset: start,
+      stream: Stream.value(bytes.sublist(start, end)),
+      contentType: 'audio/mpeg',
+    );
+  }
+}
+
+class ZoomedInScreen extends StatelessWidget {
+  final String imagePath;
+  final String tag;
+
+  const ZoomedInScreen({required this.imagePath, required this.tag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Semi-transparent black background
+          Container(
+            //color: Colors.black.withOpacity(0.5),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context); // Pop the zoomed-in screen when tapped
+            },
+            child: Center(
+              child: Hero(
+                tag: tag, // Use the tag passed from the previous screen
+                child: Image.asset(
+                  imagePath, // Use the image path passed from the previous screen
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 120,
+            right: 20,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // Pop the zoomed-in screen when the close button is pressed
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.cyan,
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(16),
+              ),
+              child: Icon(Icons.close),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

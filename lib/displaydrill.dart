@@ -21,6 +21,7 @@ class DisplayDrills extends StatefulWidget {
 class _DisplayDrills extends State<DisplayDrills> {
   String? Gender;
   String? guardianEmail;
+  List<String> drillTitles = []; 
 
   @override
   void initState() {
@@ -32,40 +33,49 @@ class _DisplayDrills extends State<DisplayDrills> {
   }
 
   Future<void> getSpeechDrills() async {
-// ignore: prefer_collection_literals
-
-    var map = Map<String, dynamic>();
-    map['Email'] = guardianEmail;
+    var map = {'Email': guardianEmail};
     var uri = "https://www.speech-assistive-app.com/getSpeechDrills.php";
     var res = await http.post(Uri.parse(uri), body: map);
 
-    //print(res.body);
-    final String data = jsonEncode(res.body);
-    print(data
-        .toString()); //content response of res.body must be converted from object to json string by using jsonEncode
-    // ignore: avoid_print
+    if (res.statusCode == 200) {
+      setState(() {
+        var data = jsonDecode(res.body);
+        print('Response data: $data');
+        if (data is List) {
+          drillTitles = data.map<String>((item) => item['Title'].toString()).toList();
+          print('Drill list: $drillTitles');
+        } else {
+          // Handle the case when data is not a List
+          print('Invalid data format');
+        }
+      });
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: const Text("List of Speech Drills"), centerTitle: true),
-        body: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (context, index) {
-              return Container(
-                height: 100,
-                color: Colors.cyan,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                margin: const EdgeInsets.all(10),
-                child: const Text(
-                  'User Id: data',
-                  style: TextStyle(fontSize: 18),
-                ),
-              );
-            }));
+      appBar: AppBar(
+        title: const Text("List of Speech Drills"),
+        centerTitle: true,
+      ),
+      body: ListView.builder(
+        itemCount: drillTitles.length, // Use the length of drillTitles
+        itemBuilder: (context, index) {
+          return Container(
+            height: 100,
+            color: Colors.cyan,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            margin: const EdgeInsets.all(10),
+            child: Text(
+              drillTitles[index], // Display the drill title at the current index
+              style: const TextStyle(fontSize: 18),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   void getGuardianEmail() async {
