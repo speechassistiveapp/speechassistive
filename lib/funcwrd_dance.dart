@@ -209,7 +209,7 @@ class _FuncwrdDance extends State<Funcwrd_Dance> {
             setState(() {});
             if (data_ == "MALE") {
               speakMaleVoice(textEditingController.text);
-            } else if (data_ == "FEMA") {
+            } else if (data_ == "FEMALE") {
               speakFemaleVoice(textEditingController.text);
             }
           },

@@ -88,7 +88,7 @@ class _Colors1 extends State<Colors1> {
   }
 
   Future speakFemaleVoice(String text) async {
-    print("Female Voice will say: $text");
+    print("FEMALEle Voice will say: $text");
     String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
     
     print('EL_API_KEY Retrieved');
@@ -97,7 +97,7 @@ class _Colors1 extends State<Colors1> {
       throw Exception('Failed to retrieve the API key from environment variables.');
     }
     String transformedText = text.split(" ").join("   , ");
-    print("Female Voice will say Transformed: $transformedText");
+    print("FEMALEle Voice will say Transformed: $transformedText");
 
     String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
     //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
@@ -171,10 +171,11 @@ class _Colors1 extends State<Colors1> {
                       var uri = "https://www.speech-assistive-app.com/getdata.php";
                       var res = await http.post(Uri.parse(uri), body: map);
                       data_ = res.body; // Assign the response body directly to data_
+                      print(data_);
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color BLACK: a black sunglasses.-- BLACK crow.-- BLACK crayon.-- And BLACK rock.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color BLACK: a black sunglasses.-- BLACK crow.-- BLACK crayon.-- And BLACK rock.');
                       }
                     },
@@ -216,7 +217,7 @@ class _Colors1 extends State<Colors1> {
           setState(() {});
           if (data_ == "MALE") {
             speakMaleVoice('This is color BLUE: a BLUE butterfly.-- BLUE bowling-ball.-- BLUE candies.-- And BLUE crayon.');
-          } else if (data_ == "FEMA") {
+          } else if (data_ == "FEMALE") {
             speakFemaleVoice('This is color BLUE: a BLUE butterfly.-- BLUE bowling-ball.-- BLUE candies.-- And BLUE crayon.');
           }
         },
@@ -265,7 +266,7 @@ class _Colors1 extends State<Colors1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color BROWN: -  a BROWN Teddy-Bear.-- BROWN Nuts - and Peanuts.-- BROWN breads.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color BROWN: -  a BROWN Teddy-Bear.-- BROWN Nuts - and Peanuts.-- BROWN breads.');
                       }
                     },
@@ -305,7 +306,7 @@ class _Colors1 extends State<Colors1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color GRAY: -  a GRAY Elephant.-- GRAY Dolphin.-- GRAY hat. And GRAY crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color GRAY: -  a GRAY Elephant.-- GRAY Dolphin.-- GRAY hat. And GRAY crayon.');
                       }
                     },
@@ -354,7 +355,7 @@ class _Colors1 extends State<Colors1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color GREEN: -  a GREEN Broccoli.-- GREEN Cloves.-- GREEN Peas. And GREEN crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color GREEN: -  a GREEN Broccoli.-- GREEN Cloves.-- GREEN Peas. And GREEN crayon.');
                       }
                     },
@@ -394,7 +395,7 @@ class _Colors1 extends State<Colors1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color ORANGE: -  a ORANGE Carrots.-- ORANGE Pumpkin.-- ORANGE Basket-ball - Ball. And ORANGE crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color ORANGE: -  a ORANGE Carrots.-- ORANGE Pumpkin.-- ORANGE Basket-ball - Ball. And ORANGE crayon.');
                       }
                     },

@@ -172,7 +172,7 @@ class _SchoolItem2 extends State<SchoolItem2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----LAPTOP!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----LAPTOP!');
                       }
                     },
@@ -215,7 +215,7 @@ class _SchoolItem2 extends State<SchoolItem2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----METAL PAPER CLIP!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----METAL PAPER CLIP!');
                       }
                     },
@@ -266,7 +266,7 @@ class _SchoolItem2 extends State<SchoolItem2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----MICROSCOPE!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----MICROSCOPE!');
                       }
                     },
@@ -318,7 +318,7 @@ class _SchoolItem2 extends State<SchoolItem2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----NOTE-BOOK!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----NOTE-BOOK!');
                       }
                     },
@@ -361,7 +361,7 @@ class _SchoolItem2 extends State<SchoolItem2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----RULER!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----RULER!');
                       }
                     },

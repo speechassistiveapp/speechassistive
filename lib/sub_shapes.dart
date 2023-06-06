@@ -83,7 +83,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('Cross');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('Cross');
                     }
 }
@@ -228,7 +228,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----CROSS!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----CROSS!');
                     }
                   },
@@ -259,7 +259,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Quadralateral!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Quadralateral!');
                     }
                   },
@@ -292,7 +292,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Pyramid!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Pyramid!');
                     }
                   },
@@ -331,7 +331,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Sphere!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Sphere!');
                     }
                   },
@@ -362,7 +362,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Star!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Star!');
                     }
                   },
@@ -393,7 +393,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Rhombus!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Rhombus!');
                     }
                   },
@@ -432,7 +432,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Do-decagon!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Do-decagon!');
                     }
                   },
@@ -463,7 +463,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Circle!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Circle!');
                     }
                   },
@@ -494,7 +494,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Cube!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Cube!');
                     }
                   },
@@ -533,7 +533,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Club!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Club!');
                     }
                   },
@@ -564,7 +564,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Crescent!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Crescent!');
                     }
                   },
@@ -595,7 +595,7 @@ class _ShapeState extends State<sub_Shapes> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Triangle!');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Triangle!');
                     }
                   },

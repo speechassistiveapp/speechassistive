@@ -176,7 +176,7 @@ class _Persons1 extends State<Persons1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----DENTIST!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----DENTIST!');
                       }
                     },
@@ -219,7 +219,7 @@ class _Persons1 extends State<Persons1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----DOCTOR!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----DOCTOR!');
                       }
                     },
@@ -270,7 +270,7 @@ class _Persons1 extends State<Persons1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----NURSE!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----NURSE!');
                       }
                     },
@@ -322,7 +322,7 @@ class _Persons1 extends State<Persons1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----POLICE.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----POLICE.');
                       }
                     },
@@ -365,7 +365,7 @@ class _Persons1 extends State<Persons1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----SENIOR CITIZENS!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----SENIOR CITIZENS!');
                       }
                     },

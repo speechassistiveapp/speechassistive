@@ -209,7 +209,7 @@ class _FuncwrdDishwash extends State<Funcwrd_Dishwash> {
             setState(() {});
             if (data_ == "MALE") {
               speakMaleVoice(textEditingController.text);
-            } else if (data_ == "FEMA") {
+            } else if (data_ == "FEMALE") {
               speakFemaleVoice(textEditingController.text);
             }
           },

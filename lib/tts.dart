@@ -35,6 +35,8 @@ class TexttoSpeech extends StatefulWidget {
   _TexttoSpeech createState() => _TexttoSpeech();
 }
 
+
+
 class _TexttoSpeech extends State<TexttoSpeech> {
   late ConfettiController _confetticontroller;
   
@@ -89,88 +91,60 @@ class _TexttoSpeech extends State<TexttoSpeech> {
     super.dispose();
   }
 
-    Future speakMaleVoice(String text) async { 
-      
-    print("Male Voice will say: $text");
-    String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
-    
-    print('EL_API_KEY Retrieved');
-    print(EL_API_KEY);
-    if (EL_API_KEY == null) {
-      throw Exception('Failed to retrieve the API key from environment variables.');
-    }
+   Future<void> preloadAudio(String url, String EL_API_KEY, String transformedText) async {
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {
+      'accept': 'audio/mpeg',
+      'xi-api-key': EL_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: json.encode({
+      "text": transformedText,
+      "model_id": "eleven_monolingual_v1",
+      "voice_settings": {
+        "stability": 0.75, 
+        "similarity_boost": 0.75
+      }
+    }),
+  );
+  
+  if (response.statusCode == 200) {
+    final bytes = response.bodyBytes;
+    await player.setAudioSource(MyCustomSource(bytes));
+  } else {
+    throw Exception('Failed to load audio');
+  }
+}
 
-    print("The Gend Value is: $gendValue");
+Future<void> speakMaleVoice(String text) async { 
+  print("Male Voice will say: $text");
+  String? EL_API_KEY = dotenv.env['EL_API_KEY'] as String?;
     
-    String transformedText = text.split(" ").join("   ,");
-    print("Male Voice will say Transformed: $transformedText");
+  print('EL_API_KEY Retrieved');
+  print(EL_API_KEY);
+  if (EL_API_KEY == null) {
+    throw Exception('Failed to retrieve the API key from environment variables.');
+  }
 
-    if (gendValue.compareTo('MALE') == 0)
-    {
-      String url = 'https://api.elevenlabs.io/v1/text-to-speech/ErXwobaYiN019PkySvjV';
-    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'accept': 'audio/mpeg',
-        'xi-api-key': EL_API_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        "text": transformedText,
-        "model_id": "eleven_monolingual_v1",
-        "voice_settings": {
-          "stability": 0.75, 
-          "similarity_boost": 0.75
-          }
-      }),
-    );
-    if (response.statusCode == 200) {
-      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
-      await player.setAudioSource(MyCustomSource(
-          bytes)); //send the bytes to be read from the JustAudio library
-      player.play(); //play the audio
-    } else {
-      // throw Exception('Failed to load audio');
-      return;
-    }
-    }else if (gendValue.compareTo('FEMALE') == 0)
-    {
-      String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
-    //String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'accept': 'audio/mpeg',
-        'xi-api-key': EL_API_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        "text": transformedText,
-        "model_id": "eleven_monolingual_v1",
-        "voice_settings": {
-          "stability": 0.75, 
-          "similarity_boost": 0.75
-          }
-      }),
-    );
-    if (response.statusCode == 200) {
-      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
-      await player.setAudioSource(MyCustomSource(
-          bytes)); //send the bytes to be read from the JustAudio library
-      player.play(); //play the audio
-    } else {
-      // throw Exception('Failed to load audio');
-      return;
-    }
-    }else {
+  print("The Gend Value is: $gendValue");
+    
+  String transformedText = text.split(" ").join("   ,");
+  print("Male Voice will say Transformed: $transformedText");
+
+  if (gendValue.compareTo('MALE') == 0) {
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/ErXwobaYiN019PkySvjV';
+    await preloadAudio(url, EL_API_KEY, transformedText);
+  } else if (gendValue.compareTo('FEMALE') == 0) {
+    String url = 'https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL';
+    await preloadAudio(url, EL_API_KEY, transformedText);
+  } else {
     // Handle the case when gendValue is null or has an unexpected value
     return;
+  }
+  
+  player.play(); // Play the preloaded audio
 }
-    
-
-    
-  } //getResponse from Eleven Labs
 
 
   Future speak_stud_male(String text_answer) async { 

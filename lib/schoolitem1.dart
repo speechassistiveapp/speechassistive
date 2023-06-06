@@ -174,7 +174,7 @@ class _SchoolItem1 extends State<SchoolItem1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----BAG!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----BAG!');
                       }
                     },
@@ -217,7 +217,7 @@ class _SchoolItem1 extends State<SchoolItem1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----BLACKBOARD!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----BLACKBOARD!');
                       }
                     },
@@ -268,7 +268,7 @@ class _SchoolItem1 extends State<SchoolItem1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----CALCULATOR!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----CALCULATOR!');
                       }
                     },
@@ -320,7 +320,7 @@ class _SchoolItem1 extends State<SchoolItem1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----CLOCK!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----CLOCK!');
                       }
                     },
@@ -363,7 +363,7 @@ class _SchoolItem1 extends State<SchoolItem1> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('-----GLOBE!');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('-----GLOBE!');
                       }
                     },

@@ -173,7 +173,7 @@ class _Persons2 extends State<Persons2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('SOLDIER');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('SOLDIER');
                       }
                     },
@@ -216,7 +216,7 @@ class _Persons2 extends State<Persons2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('STUDENTS');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('STUDENTS');
                       }
                     },
@@ -267,7 +267,7 @@ class _Persons2 extends State<Persons2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('TEACHER');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('TEACHER');
                       }
                     },
@@ -319,7 +319,7 @@ class _Persons2 extends State<Persons2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('WAITER');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('WAITER');
                       }
                     },
@@ -362,7 +362,7 @@ class _Persons2 extends State<Persons2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('BARBER');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('BARBER');
                       }
                     },

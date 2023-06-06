@@ -173,7 +173,7 @@ class _Colors2 extends State<Colors2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color PINK: -  a PINK Donut.-- PINK Flower.-- PINK Piglet. And PINK crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color PINK: -  a PINK Donut.-- PINK Flower.-- PINK Piglet. And PINK crayon.');
                       }
                     },
@@ -216,7 +216,7 @@ class _Colors2 extends State<Colors2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color PURPLE: -  a PURPLE Balloon.-- PURPLE Flower.-- PURPLE Eggplan. And PURPLE crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color PURPLE: -  a PURPLE Balloon.-- PURPLE Flower.-- PURPLE Eggplan. And PURPLE crayon.');
                       }
                     },
@@ -262,7 +262,7 @@ class _Colors2 extends State<Colors2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color RED: -  a RED Siren Alarm.-- RED Fire-Truck.-- RED Fire-extinguisher. And RED crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color RED: -  a RED Siren Alarm.-- RED Fire-Truck.-- RED Fire-extinguisher. And RED crayon.');
                       }
                     },
@@ -309,7 +309,7 @@ class _Colors2 extends State<Colors2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color WHITE: -  a WHITE Base-ball - Ball.-- WHITE Rabbit.-- WHITE Snow-Man. And WHITE crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color WHITE: -  a WHITE Base-ball - Ball.-- WHITE Rabbit.-- WHITE Snow-Man. And WHITE crayon.');
                       }
                     },
@@ -347,7 +347,7 @@ class _Colors2 extends State<Colors2> {
                       setState(() {});
                       if (data_ == "MALE") {
                         speakMaleVoice('This is color YELLOW: -  a YELLOW Duck.-- YELLOW Bell-Pepper.-- YELLOW Cheese. And YELLOW crayon.');
-                      } else if (data_ == "FEMA") {
+                      } else if (data_ == "FEMALE") {
                         speakFemaleVoice('This is color YELLOW: -  a YELLOW Duck.-- YELLOW Bell-Pepper.-- YELLOW Cheese. And YELLOW crayon.');
                       }
                     },

@@ -182,7 +182,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Bench');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Bench');
                     }
                   },
@@ -213,7 +213,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Comfort Room');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Comfort Room');
                     }
                   },
@@ -252,7 +252,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Dog House');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Dog House');
                     }
                   },
@@ -283,7 +283,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Fence');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Fence');
                     }
                   },
@@ -324,7 +324,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Game Room');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Game Room');
                     }
                   },
@@ -355,7 +355,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Garage');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Garage');
                     }
                   },
@@ -396,7 +396,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Garden');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Garden');
                     }
                   },
@@ -427,7 +427,7 @@ class _home3 extends State<Home3> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----House');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----House');
                     }
                   },

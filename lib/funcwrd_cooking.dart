@@ -292,7 +292,7 @@ class _FuncwrdCook extends State<Funcwrd_Cook> {
             setState(() {});
             if (data_ == "MALE") {
               speakMaleVoice(textEditingController.text);
-            } else if (data_ == "FEMA") {
+            } else if (data_ == "FEMALE") {
               speakFemaleVoice(textEditingController.text);
             }
           },

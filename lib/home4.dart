@@ -179,7 +179,7 @@ class _home4 extends State<Home4> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Lamp Post');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Lamp Post');
                     }
                   },
@@ -210,7 +210,7 @@ class _home4 extends State<Home4> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Laundry Area');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Laundry Area');
                     }
                   },
@@ -249,7 +249,7 @@ class _home4 extends State<Home4> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Mailbox');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Mailbox');
                     }
                   },
@@ -280,7 +280,7 @@ class _home4 extends State<Home4> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Office');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Office');
                     }
                   },
@@ -321,7 +321,7 @@ class _home4 extends State<Home4> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Study Room');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Study Room');
                     }
                   },
@@ -352,7 +352,7 @@ class _home4 extends State<Home4> {
                     setState(() {});
                     if (data_ == "MALE") {
                       speakMaleVoice('-----Wall');
-                    } else if (data_ == "FEMA") {
+                    } else if (data_ == "FEMALE") {
                       speakFemaleVoice('-----Wall');
                     }
                   },
